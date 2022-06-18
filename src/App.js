@@ -2,6 +2,7 @@ import React from 'react';
 import QuoteCard from './QuoteCard';
 
 function App() {
+  const [onSimpsonFamily, setOnSimpsonFamily] = React.useState(false);
   const [quoteList, setQuoteList] = React.useState([
     {
       quote:
@@ -10,7 +11,6 @@ function App() {
       image:
         'https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FLisaSimpson.png?1497567512083',
       characterDirection: 'Right',
-      simpsonFamily: Boolean,
     },
     {
       quote:
@@ -19,7 +19,6 @@ function App() {
       image:
         'https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FFrankGrimes.png?1497567511887',
       characterDirection: 'Left',
-      simpsonFamily: Boolean,
     },
     {
       quote: 'Ahh! Sweet liquor eases the pain.',
@@ -27,7 +26,6 @@ function App() {
       image:
         'https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FTroyMcClure.png?1497567511112',
       characterDirection: 'Right',
-      simpsonFamily: Boolean,
     },
     {
       quote:
@@ -36,7 +34,6 @@ function App() {
       image:
         'https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FNelsonMuntz.png?1497567511185',
       characterDirection: 'Left',
-      simpsonFamily: Boolean,
     },
     {
       quote:
@@ -45,7 +42,6 @@ function App() {
       image:
         'https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FBartSimpson.png?1497567511638',
       characterDirection: 'Right',
-      simpsonFamily: Boolean,
     },
     {
       quote: "But my mom says I'm cool.",
@@ -53,7 +49,6 @@ function App() {
       image:
         'https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FMilhouseVanHouten.png?1497567513002',
       characterDirection: 'Right',
-      simpsonFamily: Boolean,
     },
     {
       quote:
@@ -62,7 +57,6 @@ function App() {
       image:
         'https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FHomerSimpson.png?1497567511939',
       characterDirection: 'Right',
-      simpsonFamily: Boolean,
     },
     {
       quote: "Nothing you say can upset us. We're the MTV generation.",
@@ -70,7 +64,6 @@ function App() {
       image:
         'https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FBartSimpson.png?1497567511638',
       characterDirection: 'Right',
-      simpsonFamily: Boolean,
     },
     {
       quote: 'Oh, so they have Internet on computers now!',
@@ -78,7 +71,6 @@ function App() {
       image:
         'https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FHomerSimpson.png?1497567511939',
       characterDirection: 'Right',
-      simpsonFamily: Boolean,
     },
     {
       quote: 'Ahh! Sweet liquor eases the pain.',
@@ -86,36 +78,23 @@ function App() {
       image:
         'https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2FTroyMcClure.png?1497567511112',
       characterDirection: 'Right',
-      simpsonFamily: Boolean,
-    }
+    },
   ]);
-function simpson(e) {
-if (e.character.includes('Simpson')) {
-  e.simpsonFamily = true;
-} else { 
-  e.simpsonFamily = false;
-}
-}
-function onSimpson(e) {
-  if (e.simpsonFamily === true) {
-    console.log('hi'),
-    <QuoteCard {...e} />;
-  } else {
-    null
-  }
-}
-quoteList.map((quote) => (
-  simpson(quote)
-))
 
+  function showSimpsonOnly() {
+   setOnSimpsonFamily(!onSimpsonFamily)
+  }
   return (
     <div>
-      <button onClick={() => quoteList.map((quote) =>(
-        onSimpson(quote)
-      ))}>afficher que les simpsons</button>
-      {quoteList.map((quote, index) => (
-        <QuoteCard key={index} {...quote} />
-      ))}
+      <button onClick={showSimpsonOnly}>
+        Montrer que les simpsons: {showSimpsonOnly ? 'ON' : 'OFF'}
+      </button>
+      <h2>Liste des citations</h2>
+        {quoteList
+          .filter((quote) => !onSimpsonFamily || quote.character.includes('Simpson'))
+          .map((quote) => (
+            <QuoteCard {...quote} />
+          ))}
     </div>
   );
 }
